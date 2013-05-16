@@ -9,16 +9,16 @@ public class SymbolSpec {
 
     @Test
     public void itEvaluatesWhenPreviousSymbolIsSame(){
-        assertThat(new Symbol("I",1).evaluate(1,new Symbol("I",1))).isEqualTo(2);
+        assertThat(new Symbol("I",1).evaluate(new Symbol("I",1))).isEqualTo(1);
     }
 
     @Test
     public void itEvaluatesWhenPreviousSymbolIsSmaller(){
-        assertThat(new Symbol("V",5).evaluate(2,new Symbol("I",1))).isEqualTo(7);
+        assertThat(new Symbol("V",5).evaluate(new Symbol("I",1))).isEqualTo(5);
     }
 
     @Test
     public void itEvaluatesWhenPreviousSymbolIsGreater(){
-        assertThat(new Symbol("1",1).evaluate(5,new Symbol("V",5))).isEqualTo(4);
+        assertThat(new Symbol("1",1).evaluate(new Symbol("V",5))).isEqualTo(-1);
     }
 }

@@ -10,11 +10,11 @@ public class Symbol {
         this.value = value;
     }
 
-    public int evaluate(int addend, Symbol previousSymbol) {
+    public int evaluate(Symbol previousSymbol) {
         if(previousSymbolIsGreater(previousSymbol)){
-            return addend - value;
+            return -value;
         }
-        return addend + value;
+        return value;
     }
 
     private boolean previousSymbolIsGreater(Symbol previousSymbol) {

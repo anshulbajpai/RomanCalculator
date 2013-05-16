@@ -19,12 +19,12 @@ public class RomanCalculator {
             return 0;
         }
         if (symbols.size() == 1) {
-            return symbols.get(0).evaluate(0, Symbol.NULL);
+            return symbols.get(0).evaluate(Symbol.NULL);
         }
         Symbol previousSymbol = symbols.get(symbols.size() - 1);
-        int sum = previousSymbol.evaluate(0, Symbol.NULL);
+        int sum = previousSymbol.evaluate(Symbol.NULL);
         for (int index = symbols.size() - 2; index >= 0; index--) {
-            sum = symbols.get(index).evaluate(sum, previousSymbol);
+            sum = sum + symbols.get(index).evaluate(previousSymbol);
             previousSymbol = symbols.get(index);
         }
         return sum;
