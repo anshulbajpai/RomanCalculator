@@ -1,6 +1,3 @@
-import java.util.ArrayList;
-import java.util.List;
-
 public class RomanCalculator {
 
     private final RomanSymbolParser romanSymbolParser;
@@ -9,24 +6,41 @@ public class RomanCalculator {
         this.romanSymbolParser = romanSymbolParser;
     }
 
+    private interface Operation{
+        int evaluate(int seed, Symbol previousSymbol);
+    }
+
+
+    private class AddOperation implements Operation {
+
+        private final Symbol symbol;
+        private final Operation operation;
+
+        public AddOperation(Operation operation, Symbol symbol) {
+            this.symbol = symbol;
+            this.operation = operation;
+        }
+
+        @Override
+        public int evaluate(int seed, Symbol previousSymbol) {
+            return operation.evaluate(seed + symbol.evaluate(previousSymbol), symbol);
+        }
+    }
+
+    private class UnitOperation implements Operation {
+
+        @Override
+        public int evaluate(int seed, Symbol previousSymbol) {
+            return seed;
+        }
+    }
+
     public int evaluate(String romanString) {
         String[] romanCharacters = romanString.split("");
-        List<Symbol> symbols = new ArrayList<Symbol>();
-        for(int index = 1; index < romanCharacters.length; index++){
-            symbols.add(romanSymbolParser.parse(romanCharacters[index]));
+        Operation operation = new UnitOperation();
+        for (int index = 1; index < romanCharacters.length; index++) {
+            operation = new AddOperation(operation, romanSymbolParser.parse(romanCharacters[index]));
         }
-        if (symbols.isEmpty()) {
-            return 0;
-        }
-        if (symbols.size() == 1) {
-            return symbols.get(0).evaluate(Symbol.NULL);
-        }
-        Symbol previousSymbol = symbols.get(symbols.size() - 1);
-        int sum = previousSymbol.evaluate(Symbol.NULL);
-        for (int index = symbols.size() - 2; index >= 0; index--) {
-            sum = sum + symbols.get(index).evaluate(previousSymbol);
-            previousSymbol = symbols.get(index);
-        }
-        return sum;
+        return operation.evaluate(0, Symbol.NULL);
     }
 }
