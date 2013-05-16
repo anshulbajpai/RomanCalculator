@@ -10,7 +10,6 @@ public class RomanCalculatorSpec {
     @Test
     public void itEvaluatesRomanNumbers(){
         RomanCalculator romanCalculator = new RomanCalculator(new RomanSymbolParser());
-//        assertThat(romanCalculator.evaluate("")).isEqualTo(0);
         assertThat(romanCalculator.evaluate("V")).isEqualTo(5);
         assertThat(romanCalculator.evaluate("II")).isEqualTo(2);
         assertThat(romanCalculator.evaluate("IV")).isEqualTo(4);

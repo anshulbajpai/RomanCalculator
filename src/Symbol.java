@@ -3,6 +3,8 @@ public class Symbol {
     private final String text;
     private final int value;
 
+    public static final Symbol NULL = new Symbol("O",0);
+
     public Symbol(String text, int value) {
         this.text = text;
         this.value = value;
