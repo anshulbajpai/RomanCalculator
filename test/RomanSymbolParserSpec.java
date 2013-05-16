@@ -6,10 +6,16 @@ import static org.fest.assertions.Assertions.assertThat;
 
 @RunWith(JUnit4.class)
 public class RomanSymbolParserSpec {
-
+    RomanSymbolParser romanSymbolParser = new RomanSymbolParser();
     @Test
     public void itParsesSymbolAndCreateSymbolGraph(){
-        assertThat(new RomanSymbolParser().parse("I")).isEqualTo(new Symbol("I",1));
+        assertThat(romanSymbolParser.parse("I")).isEqualTo(new Symbol("I", 1));
+        assertThat(romanSymbolParser.parse("V")).isEqualTo(new Symbol("V", 5));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void itThrowsExceptionIfAnInvalidRomanCharacterIsParsed(){
+        romanSymbolParser.parse("f");
     }
 
 }

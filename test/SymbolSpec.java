@@ -8,17 +8,17 @@ import static org.fest.assertions.Assertions.assertThat;
 public class SymbolSpec {
 
     @Test
-    public void itEvaluatesWhenPreviousSymbolIsSame(){
+    public void itReturnsValueOfSymbolWhenPreviousSymbolIsSame(){
         assertThat(new Symbol("I",1).evaluate(new Symbol("I",1))).isEqualTo(1);
     }
 
     @Test
-    public void itEvaluatesWhenPreviousSymbolIsSmaller(){
+    public void itReturnsValueOfSymboleWhenPreviousSymbolIsSmaller(){
         assertThat(new Symbol("V",5).evaluate(new Symbol("I",1))).isEqualTo(5);
     }
 
     @Test
-    public void itEvaluatesWhenPreviousSymbolIsGreater(){
+    public void itReturnsNegatedValueOfSymbolWhenPreviousSymbolIsGreater(){
         assertThat(new Symbol("1",1).evaluate(new Symbol("V",5))).isEqualTo(-1);
     }
 }
