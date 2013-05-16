@@ -1,3 +1,6 @@
+import java.util.Arrays;
+import java.util.List;
+
 public class RomanCalculator {
 
     private final RomanSymbolParser romanSymbolParser;
@@ -6,41 +9,16 @@ public class RomanCalculator {
         this.romanSymbolParser = romanSymbolParser;
     }
 
-    private interface Operation{
-        int evaluate(int seed, Symbol previousSymbol);
-    }
-
-
-    private class AddOperation implements Operation {
-
-        private final Symbol symbol;
-        private final Operation operation;
-
-        public AddOperation(Operation operation, Symbol symbol) {
-            this.symbol = symbol;
-            this.operation = operation;
-        }
-
-        @Override
-        public int evaluate(int seed, Symbol previousSymbol) {
-            return operation.evaluate(seed + symbol.evaluate(previousSymbol), symbol);
-        }
-    }
-
-    private class UnitOperation implements Operation {
-
-        @Override
-        public int evaluate(int seed, Symbol previousSymbol) {
-            return seed;
-        }
-    }
-
     public int evaluate(String romanString) {
-        String[] romanCharacters = romanString.split("");
         Operation operation = new UnitOperation();
-        for (int index = 1; index < romanCharacters.length; index++) {
-            operation = new AddOperation(operation, romanSymbolParser.parse(romanCharacters[index]));
+        for (String romanCharacter : getRomanCharacters(romanString)) {
+            operation = new AddOperation(operation, romanSymbolParser.parse(romanCharacter));
         }
         return operation.evaluate(0, Symbol.NULL);
+    }
+
+    private List<String> getRomanCharacters(String romanString) {
+        List<String> romanCharactersWithInitialEmptyCharacter = Arrays.asList(romanString.split(""));
+        return romanCharactersWithInitialEmptyCharacter.subList(1, romanCharactersWithInitialEmptyCharacter.size());
     }
 }
